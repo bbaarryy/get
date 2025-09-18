@@ -11,6 +11,6 @@ flag = 0
 T = 0.2
 while True:
     GPIO.output(led,(GPIO.input(6)-1))
-    time.sleep(0.01)
+    time.sleep(0.1)
     
 

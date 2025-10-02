@@ -7,7 +7,7 @@ led = 26
 GPIO.setup(led, GPIO.OUT)
 GPIO.setup(6, GPIO.IN)
 
-flag = 0
+flag = 0   
 T = 0.2
 while True:
     GPIO.output(led,(GPIO.input(6)-1))

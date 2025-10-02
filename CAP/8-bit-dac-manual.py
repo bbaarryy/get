@@ -26,11 +26,14 @@ def bin_arr(number):
 
 try:
     while True:
-        voltage = float(input())
-        num = voltage_to_number(voltage)
-        bin_array = bin_arr(num)
-        for i in range(8):
-            GPIO.output(bits[i],bin_array[i])
+        try:
+            voltage = float(input())
+            num = voltage_to_number(voltage)
+            bin_array = bin_arr(num)
+            for i in range(8):
+                GPIO.output(bits[i],bin_array[i])
+        except ValueError:
+            print("неверно")
 finally:
     GPIO.output(bits,0)
     GPIO.cleanup()

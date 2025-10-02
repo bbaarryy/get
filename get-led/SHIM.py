@@ -7,7 +7,7 @@ led = 26
 GPIO.setup(led, GPIO.OUT)
 GPIO.setup(6, GPIO.IN)
 
-pwm = GPIO.PWM(led, 200)
+pwm = GPIO.PWM(led, 1000)
 duty = 0.0
 pwm.start(duty)
 

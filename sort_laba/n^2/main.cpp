@@ -115,9 +115,84 @@ void print_data(string s,int ch){
     }
 }
 
+void best_data(string s,int ch){
+    ofstream f(s, ios::out);
+    
+    int arr[10000];
+
+    for(int length = 1; length <= 4000;length ++){
+        for(int i = 0 ; i < length;i++){
+            arr[i] = i;
+        }
+        auto start = std::chrono::high_resolution_clock::now();
+        
+        switch (ch)
+        {
+        case 0:
+            shaker(arr,length);
+            break;
+        case 1:
+            bubble(arr,length);
+            break;
+        case 2:
+            insertion(arr,length);
+            break;
+        default:
+            break;
+        }
+
+        auto end = std::chrono::high_resolution_clock::now();
+        auto nsec = end - start;
+        f << nsec.count() << endl; // работаете как с привычным cout
+    }
+}
+
+void worst_data(string s,int ch){
+    ofstream f(s, ios::out);
+    
+    int arr[10000];
+
+    for(int length = 1; length <= 4000;length ++){
+        for(int i = 0 ; i < length;i++){
+            arr[i] = length-i;
+        }
+        auto start = std::chrono::high_resolution_clock::now();
+        
+        switch (ch)
+        {
+        case 0:
+            shaker(arr,length);
+            break;
+        case 1:
+            bubble(arr,length);
+            break;
+        case 2:
+            insertion(arr,length);
+            break;
+        default:
+            break;
+        }
+
+        auto end = std::chrono::high_resolution_clock::now();
+        auto nsec = end - start;
+        f << nsec.count() << endl; // работаете как с привычным cout
+    }
+}
+
 int main(){
-    print_data("data_shaker.txt",0);
-    print_data("data_bubble.txt",1);
-    print_data("data_insertion.txt",2);
+
+    print_data("data_shaker_b.txt", 0);
+    print_data("data_bubble_b.txt",2);
+    print_data("data_insertion_b.txt",1);
+
+    // best_data("data_shaker_b.txt", 0);
+    // best_data("data_bubble_b.txt",2);
+    // best_data("data_insertion_b.txt",1);
+
+    // worst_data("data_shaker_w.txt", 0);
+    // worst_data("data_bubble_w.txt",1);
+    // worst_data("data_insertion_w.txt",2);
+
+    
     return 0;
 }

@@ -12,10 +12,18 @@ def fun(string,c, naming):
         y_bubble.append(int(line))
     plt.scatter(x_bubble,y_bubble,color = c, s = 5, label = naming)
 
-fun("sort_laba/n^2/data_insertion.txt",'r',"insertion")
-fun("sort_laba/n^2/data_bubble.txt",'b',"bubble")
-fun("sort_laba/n^2/data_shaker.txt",'g',"shaker")
+def print(pref,color):
+    fun("sort_laba/n^2/data_bubble" + pref + ".txt",color,"bubble" + pref)
+    fun("sort_laba/n^2/data_insertion" + pref + ".txt",color,"insertion"+pref)
+    fun("sort_laba/n^2/data_shaker" + pref + ".txt",color,"shaker"+pref)
 
+# print("_b","green")
+# print("_w", "red")
+#print("", "y")
+
+fun("sort_laba/n^2/data_bubble.txt",'g',"bubble")
+fun("sort_laba/n^2/data_insertion.txt",'r',"insertion")
+fun("sort_laba/n^2/data_shaker.txt",'b',"shaker")
 
 plt.legend()
 plt.show()

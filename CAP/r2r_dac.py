@@ -1,9 +1,4 @@
 import RPi.GPIO as GPIO
-import time
-
-
-bits = [22,27,17,26,25,21,20,16]
-bits.reverse()
 
 def bin_arr(number):
     arr = [0]*8
@@ -14,12 +9,14 @@ def bin_arr(number):
 
 class R2R_DAC:
     def __init__(self):
+        self.works = [22,27,17,26,25,21,20,16]
+        self.works.reverse()
         self.bits = [0]*8
 
         self.highest_lvl = 3.136
 
         GPIO.setmode(GPIO.BCM)
-        GPIO.setup(bits, GPIO.OUT)
+        GPIO.setup(self.works, GPIO.OUT)
 
     def set_number(self, number):
         if(0 <= number <= 255 ):
@@ -29,7 +26,7 @@ class R2R_DAC:
                 self.bits[i] = int(bin_array[i])
             for i in range(8):
                 #print(bits[i])
-                GPIO.output(bits[i],self.bits[i])
+                GPIO.output(self.works[i],self.bits[i])
         else:
             print("неверное число")
 
@@ -39,22 +36,24 @@ class R2R_DAC:
 
     def deinit(self):
         #print(bits)
-        GPIO.output(bits,0)
+        GPIO.output(self.works,0)
         GPIO.cleanup()
 
-my_plate = R2R_DAC()
 
-try:
-    while True:
-        try:
-            s = input()
-            n = float(input())
-            if(s == 'v'):
-                my_plate.set_voltage(float(n))
-            else:
-                my_plate.set_number(float(n))
-        except ValueError:
-            print("неверно")
-finally:
-    my_plate.deinit()
+
+if __name__ == "__main__":
+    try:
+        my_plate = R2R_DAC()
+        while True:
+            try:
+                s = input()
+                n = float(input())
+                if(s == 'v'):
+                    my_plate.set_voltage(float(n))
+                else:
+                    my_plate.set_number(float(n))
+            except ValueError:
+                print("неверно")
+    finally:
+        my_plate.deinit()
 

@@ -25,7 +25,7 @@ class R2R_DAC:
         GPIO.output(bit,0)
         GPIO.cleanup()
 
-my_plate = R2R_DAC()
+my_plate = pwm()
 
 try:
     while True:

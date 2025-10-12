@@ -3,7 +3,7 @@ import seaborn as sns
 from docx import Document
 
 def fun(string,c, naming):
-    file_bubble = open("n^2/" + string, "r")
+    file_bubble = open(string, "r")
     x_bubble = []
     for i in range(1, 4001):
         x_bubble.append(i)
@@ -12,10 +12,10 @@ def fun(string,c, naming):
         y_bubble.append(int(line))
     plt.scatter(x_bubble,y_bubble,color = c, s = 5, label = naming)
 
-fun("o1.txt",'r',"o1")
-fun("o2.txt",'b',"o2")
-fun("o3.txt",'g',"o3")
-fun("ofast.txt",'y',"ofast")
+fun("sort_laba/n^2/olog0.txt",'r',"o0")
+fun("sort_laba/n^2/olog1.txt",'b',"o1")
+fun("sort_laba/n^2/olog2.txt",'g',"o2")
+fun("sort_laba/n^2/olog3.txt",'y',"o3")
 
 plt.legend()
 plt.show()

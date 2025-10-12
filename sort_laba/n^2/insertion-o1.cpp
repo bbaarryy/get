@@ -1,4 +1,4 @@
-#pragma GCC optimize("O3")
+#pragma GCC optimize("O0")
 
 #include <fstream>
 #include <iostream>
@@ -46,7 +46,7 @@ void insertion(int arr[10000],int l){
 }
 
 int main(){
-    ofstream f("o3.txt", ios::out);
+    ofstream f("o1.txt", ios::out);
     
     int arr[10000];
 

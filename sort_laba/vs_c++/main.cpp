@@ -158,29 +158,57 @@ void quick_sort(vector<int>& arr,int l_b,int r_b) {
     quick_sort(arr,l_b,r);
 }
 
+void bubble_sort(vector<int>& arr){
+    for(int i = 0; i < arr.size(); i++){
+        for(int j = 0; j< arr.size()-i-1; j++){
+            if(arr[j] > arr[j+1])swap(arr[j],arr[j+1]);
+        }
+    }
+    // REP(l){cout << arr[i] << ' ';}
+    // cout << '\n';
+    return;
+}
+
 void print_data(string s,int ch){
     ofstream f(s, ios::out);
-    ofstream q("arrs", ios::out);
     
-    int arr[5000];
+    vector<int> arr;
 
     for(int length = 1; length <= 5000;length ++){
         for(int i = 0 ; i < length;i++){
-                arr[i] = (rand_uns(-1000,1000));
-                q << arr[i] << '\n';
+            if(i < arr.size()){
+            arr[i] = (rand_uns(-1000,1000));}
+            else{
+                arr.push_back(rand_uns(-1000,1000));
+            }
         }
-        
-        auto start = std::chrono::high_resolution_clock::now();
-        sort(arr,arr + length);
-        auto end = std::chrono::high_resolution_clock::now();
-        auto nsec = end - start;
-        f << nsec.count() << endl; 
-        
+        if (ch == 0){
+            auto start = std::chrono::high_resolution_clock::now();
+            sort(arr.begin(), arr.end());
+            auto end = std::chrono::high_resolution_clock::now();
+            auto nsec = end - start;
+            f << nsec.count() << endl;
+        }
+        else if(ch == 1){
+            auto start = std::chrono::high_resolution_clock::now();
+            merge_sort(arr);
+            auto end = std::chrono::high_resolution_clock::now();
+            auto nsec = end - start;
+            f << nsec.count() << endl;
+        }
+        else{
+            auto start = std::chrono::high_resolution_clock::now();
+            bubble_sort(arr);
+            auto end = std::chrono::high_resolution_clock::now();
+            auto nsec = end - start;
+            f << nsec.count() << endl;
+        }
     }
 }
 
 
 int main(){
-    print_data("data_cfast.txt", 0);
+    //print_data("data_c_merge_fast.txt", 1);
+    print_data("data_bubble.txt", 2);
     return 0;
 }

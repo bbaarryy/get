@@ -1,3 +1,5 @@
+#pragma <>  
+
 #include <fstream>
 #include <iostream>
 #include <algorithm>

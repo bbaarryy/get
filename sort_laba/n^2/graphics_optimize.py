@@ -17,5 +17,5 @@ fun("sort_laba/n^2/olog1.txt",'b',"o1")
 fun("sort_laba/n^2/olog2.txt",'g',"o2")
 fun("sort_laba/n^2/olog3.txt",'y',"o3")
 
-plt.legend()
+plt.legend(fontsize = "30")
 plt.show()

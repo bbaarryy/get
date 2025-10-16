@@ -13,3 +13,25 @@ https://www.altlinux.org/TLP#Работа_в_терминале
 ### Print queue
 
 ```lpq```
+
+### Move - delete - links
+```mkdir dir1 dir2``` - создание директории
+
+```cp item1 item2```  - копирование item1 в item2:
+- -i - запрашивать разрешение у пользователя
+- -v - вывод действий 
+- -u - перезапивать только новые файлы
+
+```mv``` - перемещение, аналогично
+
+```rm``` - удаление
+- -r - recursive
+- -f - force
+!!!Warning!!! 
+
+```ln``` - создание ссылок
+
+```ln file link``` - hard-link
+
+```ln -s file link``` - symb-link
+

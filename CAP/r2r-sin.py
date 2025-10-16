@@ -6,7 +6,7 @@ import time
 
 print("start")
 amplitude = 3
-signal_frequency = 5
+signal_frequency = 9
 sampling_frequency = 100
 my_plate = r2r.R2R_DAC()
 now_time = 0

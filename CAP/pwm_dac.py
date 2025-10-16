@@ -23,14 +23,14 @@ class pwm_:
         GPIO.output(self.bit,0)
         GPIO.cleanup()
 
-my_plate = pwm_()
+
 
 
 if __name__ == "__main__":
     try:
         while True:
             try:
-                
+                my_plate = pwm_()
                 n = float(input("input digit:"))
                 my_plate.set_voltage(float(n  + (n-2)*0.2))
             except ValueError:

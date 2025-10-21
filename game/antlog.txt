@@ -1,0 +1,6 @@
+#####	Starting new Antonina runs!
+#####	STEPS_LIMIT=256	N_TESTS=10
+#####	Starting Test 03...
+#	New test... clear
+ done in 17 steps!
+#	New test... clear

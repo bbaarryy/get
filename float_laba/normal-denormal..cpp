@@ -1,3 +1,5 @@
+#include <xmmintrin.h>
+#include <immintrin.h>
 #include <fstream>
 #include <iostream>
 #include <algorithm>
@@ -24,14 +26,14 @@ string bin_ui(unsigned int& a){
 }
 
 union ui_float{
-    unsigned int a;
-    float b;
+    unsigned int ui;
+    float f;
 };
 
 void print(float y){
     ui_float ans;
-    ans.b = y;
-    string s = bin_ui(ans.a);
+    ans.f = y;
+    string s = bin_ui(ans.ui);
     //cout << s << '\n';
     cout << s[0] << ' ';
     int ind = 1;
@@ -46,12 +48,30 @@ void print(float y){
     }
 }
 
-int main(){
-    cout.precision(10);
-    //y = x^2
-    ofstream f("integrate_float.txt", ios::out);
+void solve(ll n){
+    REP(n){
+        float a = 1234567.7654321;
+        REP(n){
+            a = a/3.1415926535;
+            a = a-0.999*a;
+            a = -a;
+            float c = -a;
+            c += 0.00001;
+            float d = c+a;
+            d /= 1000;
+            d += a;
+        }
+    }
+}
 
-    for(float q = 10; q <= 1e6;q+=300){
+int main(){
+    //_MM_SET_DENORMALS_ZERO_MODE(_MM_DENORMALS_ZERO_ON);
+    _mm_setcsr(_mm_getcsr() | 0x8040);
+    
+    ofstream f("denorm.txt", ios::out);
+
+    for(float q = 1e5; q <= 1e6;q+=300){
+        auto start = std::chrono::high_resolution_clock::now();
         float delta = 1/q;
         float x = 0;
         float ans = 0;
@@ -60,7 +80,8 @@ int main(){
             ans += delta * x * x;
             x += delta;
         }
-
-        f << fixed << ans << '\n';
+        auto end = std::chrono::high_resolution_clock::now();
+        auto nsec = end - start;
+        f << nsec.count() << endl;
     }
 }

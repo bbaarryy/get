@@ -30,7 +30,7 @@ union ui_float{
 
 int main(){
     ui_float ans;
-    ans.b = 0.2;
+    ans.b = 16777217.00;
     string s = bin_ui(ans.a);
     //cout << s << '\n';
     cout << s[0] << ' ';

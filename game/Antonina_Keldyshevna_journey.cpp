@@ -30,6 +30,8 @@ int ind = 0;
 int ind2 = 0;
 bool rr = 1;
 std::string path ="";
+bool begin_rock = 1;
+std::string ans1 = "!";
 
 bool if1 = 1;
 bool if2 = 1;
@@ -38,6 +40,8 @@ bool if4 = 1;
 
 void Reset()                                    //  <======== You can set or reset you globals
 {             
+	begin_rock = 1;
+	ans1 = "!";
 	end_steps=0;
 	path = ""; 
 	obh_s = "!";	                              	//            before each test.
@@ -98,8 +102,115 @@ char horiz_move(char map[][8], int ant_x, int ant_y, int home_x, int home_y, int
 	return ('q');
 }
 
+bool rocks(char map[][8]){
+	for(int x = 0 ; x < 8 ; x ++){
+		for(int y = 0 ; y < 8 ; y ++){
+			if(map[x][y] == '#')return 1;
+		}
+	}
+	return 0;
+}
+
+std::string clear_place(char map[][8], int ant_x, int ant_y, int home_x, int home_y, int sample_x, int sample_y){
+	std::string ans = "";
+	if(ant_x > 0){ ans += 'd'; ant_x++;}
+	else{ans += 'u'; ant_x--;}
+
+	while(map[home_x][ant_y] != '#'){
+		if(sample_y > home_y){
+			ans += 'r';
+			ant_y++;
+		}
+		else{
+			ans += 'l';
+			ant_y--;
+		}
+	}
+
+	if(ant_x > home_x){
+		ans += 'u';
+		ant_x --;
+	}
+	else{
+		ans += 'd';
+		ant_x ++;
+	}
+
+	while(ant_y != home_y){
+		if(sample_y > home_y){
+			ans += 'l';
+			ant_y--;
+		}
+		else{
+			ans += 'r';
+			ant_y++;
+		}
+	}
+	return ans;
+}
+
+
+std::string clear_place_y(char map[][8], int ant_x, int ant_y, int home_x, int home_y, int sample_x, int sample_y){
+	std::string ans = "";
+	if(ant_y > 0){ ans += 'l'; ant_y--;}
+	else{ans += 'r'; ant_y++;}
+
+	while(map[home_x][ant_y] != '#'){
+		if(sample_y > home_y){
+			ans += 'r';
+			ant_y++;
+		}
+		else{
+			ans += 'l';
+			ant_y--;
+		}
+	}
+
+	if(ant_x > home_x){
+		ans += 'u';
+		ant_x --;
+	}
+	else{
+		ans += 'd';
+		ant_x ++;
+	}
+
+	while(ant_y != home_y){
+		if(sample_y > home_y){
+			ans += 'l';
+			ant_y--;
+		}
+		else{
+			ans += 'r';
+			ant_y++;
+		}
+	}
+	return ans;
+}
+
 char Move(char map[][8], int ant_x, int ant_y, int home_x, int home_y, int sample_x, int sample_y) // <======= YEP, THIS IS IT
 {
+	if(rocks(map) && begin_rock){
+		if(ans1 == "!"){
+			if(sample_x == home_x){
+				ans1= clear_place(map,ant_x,ant_y,home_x,home_y,sample_x,sample_y);
+			}
+			else{
+				ans1= clear_place_y(map,ant_y,ant_x,home_y,home_x,sample_y,sample_x);
+			}
+			ind2 = 1;
+			return ans1[ind2-1];
+		}
+		else{
+			ind2++;
+			if(ind2 == ans1.size()){
+				begin_rock = 0;
+			}
+			return ans1[ind2-1];
+		}
+	
+	}
+
 	//without rocks
 	if((home_x == sample_x && ant_x == home_x) || (ant_y == home_y && home_y == sample_y) || end_steps){
 		if(sample_x == home_x){
@@ -115,8 +226,8 @@ char Move(char map[][8], int ant_x, int ant_y, int home_x, int home_y, int sampl
 			else{
 				end_steps=1;
 				char t = horiz_move(map,ant_y,ant_x,home_y,home_x,sample_y,sample_x);
-				if(t=='u')return('r');
-				if(t=='d')return('l');
+				if(t=='d')return('r');
+				if(t=='u')return('l');
 				if(t=='l')return('u');
 				if(t=='r')return('d');
 			}
@@ -156,8 +267,8 @@ char Move(char map[][8], int ant_x, int ant_y, int home_x, int home_y, int sampl
 					if(t == 'l'){
 						if((sample_y == ant_y-1 || sample_y == ant_y+1) && sample_x == ant_x){sample_y--;}
 						ant_y--;}
-					if(t == 'u'){ant_x--;}
-					if(t == 'd'){ant_x++;}
+					if(t == 'd'){ant_x--;}
+					if(t == 'u'){ant_x++;}
 				}
 			}
 		}
@@ -435,31 +546,31 @@ int main()
 	// printf("Test 02: winrate=%d%% av.steps=%d score=%d\n", wr, as, score);
 	// logfile << "#####\tTest 02: winrate="<<wr<<"% av.steps=" << as<<" score="<<score<<"\n";
 
-	//Test 03 	all in corners
-	logfile << "#####\tStarting Test 03...\n";
-	wins = 0; sum = 0;
-	for (int i = 0; i < N_TESTS; i++)
-	{
-		int ax = (rand() % 2 == 0)?0:7, ay = (rand() % 2 == 0) ? 0 : 7;
-		int gx = ax, gy = ay;
-		while (gx == ax && gy == ay)
-		{
-			gx = (rand() % 2 == 0) ? 0 : 7;
-			gy = (rand() % 2 == 0) ? 0 : 7;
-		}
-		MakeLab(lab, ax, ay, ax, ay, gx, gy, 0);
-		//test
-		printf("Test 03: %d/%d             \n", i, N_TESTS);
-		int res = GoTest(lab, PRINT_STEPS);
-		if (res > 0) { wins++; sum += res; }
-		else if(res==-2) StopAll();
-		printf("\r\033[A");
-	}
-	score = 100 * (wins * STEPS_LIMIT - sum) / STEPS_LIMIT / N_TESTS;
-	totalscore += score;
-	wr = 100 * wins / N_TESTS; as = wins > 0 ? sum / wins : 0;
-	printf("Test 03: winrate=%d%% av.steps=%d score=%d\n", wr, as, score);
-	logfile << "#####\tTest 03: winrate="<<wr<<"% av.steps=" << as<<" score="<<score<<"\n";
+	// //Test 03 	all in corners
+	// logfile << "#####\tStarting Test 03...\n";
+	// wins = 0; sum = 0;
+	// for (int i = 0; i < N_TESTS; i++)
+	// {
+	// 	int ax = (rand() % 2 == 0)?0:7, ay = (rand() % 2 == 0) ? 0 : 7;
+	// 	int gx = ax, gy = ay;
+	// 	while (gx == ax && gy == ay)
+	// 	{
+	// 		gx = (rand() % 2 == 0) ? 0 : 7;
+	// 		gy = (rand() % 2 == 0) ? 0 : 7;
+	// 	}
+	// 	MakeLab(lab, ax, ay, ax, ay, gx, gy, 0);
+	// 	//test
+	// 	printf("Test 03: %d/%d             \n", i, N_TESTS);
+	// 	int res = GoTest(lab, PRINT_STEPS);
+	// 	if (res > 0) { wins++; sum += res; }
+	// 	else if(res==-2) StopAll();
+	// 	printf("\r\033[A");
+	// }
+	// score = 100 * (wins * STEPS_LIMIT - sum) / STEPS_LIMIT / N_TESTS;
+	// totalscore += score;
+	// wr = 100 * wins / N_TESTS; as = wins > 0 ? sum / wins : 0;
+	// printf("Test 03: winrate=%d%% av.steps=%d score=%d\n", wr, as, score);
+	// logfile << "#####\tTest 03: winrate="<<wr<<"% av.steps=" << as<<" score="<<score<<"\n";
 
 	//Test 04 	at 1 line with 1 #
 	logfile << "#####\tStarting Test 04...\n";

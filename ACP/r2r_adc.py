@@ -43,6 +43,20 @@ class R2R_ADC:
             time.sleep(0.001)
         return num
 
+    def binary_search(self):
+        GPIO.output(self.works,0)
+        l = 0
+        r = 255
+        while(r-l>1):
+            m = (r+l)//2
+            self.set_number(m)
+            time.sleep(0.001)
+            if GPIO.input(self.check) == 0:
+                l = m
+            else:
+                r = m
+        return r
+
     def deinit(self):
         #print(bits)
         GPIO.output(self.works,0)
@@ -57,7 +71,7 @@ if __name__ == "__main__":
         ch = 0
         last_ans = -1
         while True:
-            ans = my_plate.sequential_counting_adc(update)
+            ans = my_plate.binary_search()
             if(ans != 0):
                 print(float(int(ans/255 * 3.16 * 100))/100)
             last_ans = ans

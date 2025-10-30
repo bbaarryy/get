@@ -1,4 +1,5 @@
 import smbus
+import time
 
 class MCP3021:
     def __init__(self, dynamic_range, verbose = False):
@@ -16,5 +17,22 @@ class MCP3021:
             print(f"Принятые данные: {data}, Старший байт: {upper_data_byte:x}, Младший байт: {lower_data_byte:x}, Число: {number}")
         return number
 
+    def get_voltage(self):
+        num = self.get_number()
+        return (num / 655 * 5.19)
+
     def deinit(self):
         self.bus.close()
+
+
+
+if __name__ == "__main__":
+    try:
+        my_plate = MCP3021(5.19)
+        
+        while True:
+            ans = my_plate.get_voltage()
+            print(ans)
+            time.sleep(1)
+    finally:
+        my_plate.deinit()

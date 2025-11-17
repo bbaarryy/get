@@ -15,7 +15,8 @@ def fun(string,c, naming):
         x_bubble.append(i*10)
     plt.scatter(x_bubble,y_bubble,color = c, s = 5, label = naming)
 
-fun("./float_laba/integrate_double.txt",'g',"int_float")
+fun("./float_laba/integrate_float.txt",'g',"int_float")
+fun("./float_laba/norm-gr.txt",'r',"DNZ")
 
 plt.legend()
 plt.show()

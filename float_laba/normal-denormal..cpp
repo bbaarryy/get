@@ -1,3 +1,5 @@
+#pragma GCC optimize("O0")
+
 #include <xmmintrin.h>
 #include <immintrin.h>
 #include <fstream>
@@ -48,29 +50,14 @@ void print(float y){
     }
 }
 
-void solve(ll n){
-    REP(n){
-        float a = 1234567.7654321;
-        REP(n){
-            a = a/3.1415926535;
-            a = a-0.999*a;
-            a = -a;
-            float c = -a;
-            c += 0.00001;
-            float d = c+a;
-            d /= 1000;
-            d += a;
-        }
-    }
-}
-
 int main(){
     //_MM_SET_DENORMALS_ZERO_MODE(_MM_DENORMALS_ZERO_ON);
-    _mm_setcsr(_mm_getcsr() | 0x8040);
-    
-    ofstream f("denorm.txt", ios::out);
+    //_mm_setcsr(_mm_getcsr() | 0x8040);
+    _mm_setcsr(_mm_getcsr() & ~0x8040);
 
-    for(float q = 1e5; q <= 1e6;q+=300){
+    ofstream f("denorm.txt", ios::out);
+    int summ_time =0;
+    for(float q = 1e2; q <= 5e5;q+=300){
         auto start = std::chrono::high_resolution_clock::now();
         float delta = 1/q;
         float x = 0;
@@ -81,7 +68,10 @@ int main(){
             x += delta;
         }
         auto end = std::chrono::high_resolution_clock::now();
+        
         auto nsec = end - start;
+        summ_time += nsec.count();
         f << nsec.count() << endl;
     }
+    cout << summ_time << '\n';
 }

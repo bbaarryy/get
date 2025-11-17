@@ -54,6 +54,10 @@ int main(){
         cout << a;
         a +=1;
         cout << fixed << '\r';
+        if(a == a+1){
+            cout << fixed << '\n';
+            break;
+        }
     }
 
 }

@@ -1,38 +1,42 @@
-#include <fstream>
-#include <iostream> 
-#include <algorithm>
-#include <vector>
-#include <map>
-#include <chrono>
-#include <ctime>
-#include <random>
+void separate_odd_even(const Sequence* input, Sequence** odd, Sequence** even){
+    Sequence* a;
+    a->data = new int[input->size];
+    int* na;
+    na = new int;
+    a->size = *na;
 
-using namespace std;
+    Sequence* b;
+    b->data = new int[input->size];
+    int* nb;
+    nb = new int;
+    b->size = *nb;
+    
+    *odd = a;
+    *even = b;
+    
+    int even_size=0;
+    int odd_size = 0;
 
-#define ll long long
-#define REP(n) for(int i = 0 ; i < n ; i ++)
-
-struct duo{
-    ll n;
-    string s;
-};
-
-ll bin_pow(ll a,ll n){//a^n
-    if(n==1){return a;}
-
-    else{
-        if(n%2==0){
-            ll j = n/2;
-            ll b = bin_pow(a,j);//a^(n/2)
-            return b*b;
+    int il = 0;
+    int ir = 0;
+    for(int i = 0 ; i < input->size ; i++){
+        if((input->data)[i] % 2 == 1){
+            (*odd)->data[il] = (input->data)[i];
+            odd_size++;
+            il++;
         }
         else{
-            ll j=n-1;
-            return a * bin_pow(a,j);
+           (*even)->data[ir] = (input->data)[i];
+            even_size++;
+            ir++;
         }
     }
+    
+    (**odd).size = odd_size;
+    (**even).size = even_size;
 }
 
-int main(){
-    cout << bin_pow(5,10);
+void clear(Sequence* s){
+    
+    delete[] s->data;
 }

@@ -51,7 +51,7 @@ int main(){
     //y = x^2
     ofstream f("integrate_float.txt", ios::out);
 
-    for(float q = 10; q <= 1e6;q+=300){
+    for(float q = 10; q <= 5e5;q+=300){
         float delta = 1/q;
         float x = 0;
         float ans = 0;

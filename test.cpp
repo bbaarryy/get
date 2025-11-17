@@ -1,67 +1,78 @@
-#include <fstream>
 #include <iostream>
-#include <algorithm>
-#include <vector>
-#include <map>
-#include <chrono>
-#include <ctime>
-#include <random>
-
 using namespace std;
 
-#define ll long long 
-#define REP(n) for(int i = 0 ; i < n ; i ++)
-
-struct trio{
-    ll a,b,c;
+struct Matrix
+{
+    int** data;
+    int n, m;
 };
 
-int main(){
-    ll n,m;
-    cin >> n >> m;
+void init(Matrix *matrix){
+    int** arr = new int*[matrix->n];
+    for(int i = 0 ; i < matrix->n;i++){
+        arr[i] = new int[matrix->m];
+    }
+    matrix->data = arr;
+}
 
-    vector<vector<ll>> arr(n,vector<ll> (m,0));
-
-    for(int i = 0 ; i < n ; i ++){
-        for(int j = 0 ; j < m ; j ++){
-            cin >> arr[i][j];
+void clean(Matrix *matrix){
+    for(int i = 0 ; i < matrix->n;i++){
+        delete[] matrix->data[i];
+    }
+    delete[] matrix->data;
+}
+void expand(Matrix* matrix, int n_minus, int n_plus, int m_minus, int m_plus){
+    int** new_a = new int*[matrix->n + n_minus + n_plus];
+    int N = matrix->n + n_minus + n_plus;
+    for(int i = 0 ; i < N;i++){
+        new_a[i] = new int[matrix->m + m_minus + m_plus];
+    }
+    
+    int M = matrix->m + m_minus + m_plus;
+    for(int i = 0 ; i < N ; i ++){
+        for(int j=0 ; j<M ; j++){
+            new_a[i][j] = 0;
+        }
+    }
+    for(int i = n_minus;i<n_minus + matrix->n;i++){
+        for(int j= m_minus;j<m_minus+matrix->n;j++){
+            new_a[i][j] = matrix->data[i-n_minus][j-m_minus];
         }
     }
 
-    vector<vector<ll>> dp(n,vector<ll> (m,0));
-    vector<vector<string>> dir(n,vector<string> (m,""));
-    dp[0][0] = arr[0][0];
+    int** last = matrix->data;
+    int last_n = matrix->n;
+    int last_m = matrix->m;
+    matrix->data = new_a;
+    matrix->n = N;
+    matrix->m = M;
+    for(int i = 0 ; i < last_n;i++){
+        delete[]last[i];
+    }
+    delete[] last;
+}
 
-    for(int i = 1 ; i < m;i++){
-        dp[0][i] = dp[0][i-1] + arr[0][i];
-        
+int main()
+{
+    Matrix matrix;
+    cin >> matrix.n >> matrix.m;
+    init(&matrix);
+    for (int i = 0; i < matrix.n; i++)
+        for (int j = 0; j < matrix.m; j++)
+            cin >> matrix.data[i][j];
+
+    int n_minus, n_plus, m_minus, m_plus;
+    cin >> n_minus >> n_plus >> m_minus >> m_plus;
+
+    expand(&matrix, n_minus, n_plus, m_minus, m_plus);
+
+    for (int i = 0; i < matrix.n; i++)
+    {
+        for (int j = 0; j < matrix.m; j++)
+            cout << matrix.data[i][j];
+        cout << endl;
     }
 
-    for(int i = 1 ; i < n;i++){
-        dp[i][0] = dp[i-1][0] + arr[i][0];
-    }
-
-    for(int i = 1 ; i < n ; i++){
-        for(int j = 1 ; j < m ; j ++){
-            if(dp[i-1][j] <= dp[i][j-1]){
-                dp[i][j] = dp[i][j-1] + arr[i][j];
-                dir[i][j] = "right";
-            }
-            else{
-                dp[i][j] = dp[i-1][j] + arr[i][j];
-                dir[i][j] = "down";
-            }   
-        }
-    }
-
-    ll i =n-1;ll j=m-1;
-    vector<string> ans;
-    while(i != 1 || j!= 1){
-        ans.push_back(dir[i][j]);
-        if(dir[i][j] == "down"){ i--;}
-        else{j--;}
-    }
-    REP(ans.size()){
-        cout << ans[i] << '\n';
-    }
+    clean(&matrix);
+    return 0;
 }

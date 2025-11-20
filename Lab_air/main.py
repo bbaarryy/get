@@ -1,15 +1,28 @@
+import jetFunctions as jet
 import RPi.GPIO as GPIO
-import spidev
+import time
 
-spi = spider.SpiDev()
-spi.open(0,0)
+file = open("./Lab_air/90data.txt",'w')
+n = 221
 
-def getAdc():
-    adcResponse = spi.xfer2([0,0])
-    return ((adcResponse[0] & 0x1F) << 8 | adcResponse[1]) >> 1
+x = 550
+jet.initSpiAdc()
+jet.initStepMotorGpio()
 
 try:
-    for i in range(20000):
-        print(getAdc(), end = '\r')
+    while True:
+        n-=1
+        if(n==0):
+            break
+        else:
+            jet.stepBackward(5)
+            x-=5
+            a = str(jet.getAdc()) + ' ' + str(x)
+            file.write(a + '\n')
+            print(a,n)
+        time.sleep(0.35)
+except KeyboardInterrupt:
+    GPIO.cleanup()
 finally:
-    spi.close()
+    jet.stepForward(1100)
+    jet.deinitSpiAdc()

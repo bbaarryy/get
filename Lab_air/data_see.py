@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-file_calib = open("./Lab_air/new_calib1_data.txt")
+file_calib = open("./Lab_air/new_calib0_data.txt")
 zero_level = 0
 
 calib_arr = []
@@ -9,7 +9,7 @@ calib_arr = []
 for line in file_calib:
     calib_arr.append(line[0:6])
 
-def fun_plot(file00,s):
+def fun_plot(file00,s,qq):
     arr00=[]
     coords = []
 
@@ -30,16 +30,19 @@ def fun_plot(file00,s):
     
     plt.xticks(np.arange(min(coords), max(coords)+50, 50.0),fontsize = 15)
     
-    plt.plot(coords,arr00,color = s)
+    plt.plot(coords,arr00,color = s,label = 'Расстояние - ' + qq + "cm",lw = 2)
 
-colors = ['r','g','b','y','b','pink','v','brown']
+colors = ['r','g','b','y','b','pink','v','brown','violet','grey']
 
-for i in range(0,6,1):
-    url = "./Lab_air/" + str(i) + "0data.txt"
-    file00 = open(url)
-    fun_plot(file00,colors[i])
-    
-plt.yticks(np.arange(-1800, 1e4, 600.0))
+for i in range(0,10,1):
+    if(i!=6 and i!= 8):
+        url = "./Lab_air/" + str(i) + "0data.txt"
+        file00 = open(url)
+        fun_plot(file00,colors[i],str(i*10))
+
+
+
+plt.yticks(np.arange(-1800, 12000, 600.0))
 plt.grid()
 plt.title("Зависимость давления(в условных единицах), от смещения",fontsize = 25)
 
@@ -47,6 +50,7 @@ ax = plt.gca()
 ax.set_xlabel("Смещение(у.е.)", fontsize=25)    # +
 ax.set_ylabel("Давление(у.е.)", fontsize=25)
 
+plt.legend(fontsize = 25)
 plt.show()
 #print(arr00[0:10])
 

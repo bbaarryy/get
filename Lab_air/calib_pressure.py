@@ -14,8 +14,8 @@ def average(file_calib):
     zero_level /= q
     return zero_level
 
-zero_level = average(file_calib)
-plus_level = average(file_plus)
+zero_level = average(file_calib)/1000
+plus_level = average(file_plus)/1000
 
 colors = ['r','g','b','y','black','pink','v','brown']
 
@@ -29,7 +29,7 @@ plt.plot(dot_atm_pressure,dot_atm_sensor,label ="график прямой y = 2
 
 ax = plt.gca()
 ax.set_xlabel("Давление(Па)", fontsize=25)    # +
-ax.set_ylabel("АЦП(у.е.)", fontsize=25)
+ax.set_ylabel("АЦП(у.е.) $\cdot10^3$", fontsize=25)
 
 plt.legend(fontsize = 25)
 plt.minorticks_on()

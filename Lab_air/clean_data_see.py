@@ -17,7 +17,6 @@ def fun_plot(file00,s,qq,start_int,end_int):
     curr_calib = -1
     
     for line in file00:
-        
         curr = line
         num = ""
         x = ""
@@ -40,12 +39,19 @@ def fun_plot(file00,s,qq,start_int,end_int):
                 x = line[i+1:-1]
                 if(abs(int(x)) > 270):
                     v = 0
-                
-        arr00.append(v)
+        
+        if(start_int < int(x) * 0.0055 * 10 < end_int):
+            arr00.append(v)
+        else:
+            arr00.append(0)
+        
         coords.append(int(x) * 0.0055 * 10)
         index+=1
+    
     curr_Q = 0
-
+    for i in range(len(coords)):
+            coords[i] += 0.5
+    
     for i in range(1,len(arr00)):
         if(start_int < coords[i] < end_int):
             curr_Q += abs(0.5*(abs(coords[i]) * arr00[i] + abs(coords[i-1]) * arr00[i-1]) * (coords[i] - coords[i-1]))  
@@ -63,20 +69,18 @@ for i in range(0,10,1):
         fun_plot(file00,colors[i],str(i*10),start_int_arr[i],end_int_arr[i])
 
 plt.grid()
-plt.title("Зависимость давления(в условных единицах), от смещения",fontsize = 25)
+plt.title("Зависимость скорости струи от смещения" + '\n',fontsize = 50)
 
 ax = plt.gca()
-ax.set_xlabel("Смещение(mm)", fontsize=25)    # +
-ax.set_ylabel("Скорость(м\с)", fontsize=25)
+ax.set_xlabel("Смещение(mm)", fontsize=28)    # +
+ax.set_ylabel("Скорость(м\с)", fontsize=28)
 
-plt.legend(fontsize = 25)
+plt.legend(fontsize = 28)
 plt.minorticks_on()
 plt.grid(which='major', color = '#444', linewidth = 1)
 plt.grid(which='minor', color='#aaa', ls=':')
-plt.xticks(fontsize=25)
-plt.yticks(fontsize=25)
-
-
+plt.xticks(fontsize=28)
+plt.yticks(fontsize=28)
 
 plt.show()
 #print(arr00[0:10])

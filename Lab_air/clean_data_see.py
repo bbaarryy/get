@@ -9,13 +9,29 @@ calib_arr = []
 for line in file_calib:
     calib_arr.append(line[0:6])
 
+#автоцентрирование
+delta = 0
+
+file_00 = open("./Lab_air/00data.txt",'r')
+start = -1
+end=-1
+last = 216227
+for line in file_00:
+    curr = int(line[0:6])
+    if(abs(curr - last) > 5000):
+        if(start == -1):
+            start = int(line[6::])
+        elif end == -1:
+            end = int(line[6::])
+
+delta = -(start+end)/2
+
+
 def fun_plot(file00,s,qq,start_int,end_int):
     arr00=[]
     coords = []
-
     index = 0
     curr_calib = -1
-    
     for line in file00:
         curr = line
         num = ""
@@ -29,29 +45,23 @@ def fun_plot(file00,s,qq,start_int,end_int):
                     curr_calib = int(num)
                 if(int(num) > 1e6):
                     num = str(int(curr_calib))
-
                 v = (((max(0,2*(int(num) - int(curr_calib))/23.6) / 1.2))**0.5)
                 if(v < 1):
                     next_v+=1
-                
                 if(next_v == 0):
                     v=0
                 x = line[i+1:-1]
                 if(abs(int(x)) > 270):
                     v = 0
-        
         if(start_int < int(x) * 0.0055 * 10 < end_int):
             arr00.append(v)
         else:
             arr00.append(0)
-        
         coords.append(int(x) * 0.0055 * 10)
         index+=1
-    
     curr_Q = 0
     for i in range(len(coords)):
-            coords[i] += 0.5
-    
+            coords[i] += delta
     for i in range(1,len(arr00)):
         if(start_int < coords[i] < end_int):
             curr_Q += abs(0.5*(abs(coords[i]) * arr00[i] + abs(coords[i-1]) * arr00[i-1]) * (coords[i] - coords[i-1]))  

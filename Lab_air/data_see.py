@@ -24,11 +24,11 @@ def fun_plot(file00,s,qq):
                 if(int(num) > 1e6):
                     num = str(int(calib_arr[index]))
                 x = line[i+1:-1]
-        arr00.append(int(num) - int(calib_arr[index]))
-        coords.append(int(x))
+        arr00.append((int(num) - int(calib_arr[index]))/23.6)
+        coords.append(int(x) * 0.0055)
         index+=1
     
-    plt.xticks(np.arange(min(coords), max(coords)+50, 50.0),fontsize = 15)
+    
     
     plt.plot(coords,arr00,color = s,label = 'Расстояние - ' + qq + "cm",lw = 2)
 
@@ -40,17 +40,19 @@ for i in range(0,10,1):
         file00 = open(url)
         fun_plot(file00,colors[i],str(i*10))
 
-
-
-plt.yticks(np.arange(-1800, 12000, 600.0))
 plt.grid()
-plt.title("Зависимость давления(в условных единицах), от смещения",fontsize = 25)
+plt.title("Зависимость давления(в условных единицах), от смещения",fontsize = 40)
 
 ax = plt.gca()
-ax.set_xlabel("Смещение(у.е.)", fontsize=25)    # +
-ax.set_ylabel("Давление(у.е.)", fontsize=25)
+ax.set_xlabel("Смещение(см)", fontsize=40)    # +
+ax.set_ylabel("Увеличение давления(Па)", fontsize=40)
 
-plt.legend(fontsize = 25)
+plt.minorticks_on()
+plt.grid(which='major', color = '#444', linewidth = 1)
+plt.grid(which='minor', color='#aaa', ls=':')
+plt.legend(fontsize = 40)
+plt.xticks(fontsize=40)
+plt.yticks(fontsize=40)
 plt.show()
 #print(arr00[0:10])
 

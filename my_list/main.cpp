@@ -5,33 +5,146 @@ struct subforwardlist {
     subforwardlist* next;
 };
 
-bool init(subforwardlist *sfl){
-    sfl = new subforwardlist;
-    sfl->data = -1;
-    sfl->next = NULL;
+bool init(subforwardlist **sfl){
+    *sfl = NULL;
 
-    return 0;
+    return true;
 } 	//инициализация пустого недосписка 
 
-bool push_back(subforwardlist *sfl, int d){
-    while(sfl -> next){
-        sfl = sfl->next;
+bool push_back(subforwardlist **sfl, int d){
+    subforwardlist* start = *sfl;
+    
+    if(start == NULL){
+        auto temp = new subforwardlist;
+        temp->data = d;
+        temp->next = NULL;
+        *sfl = temp;
     }
-    sfl->data = d;
-    sfl->next = new subforwardlist;
-    sfl->next->next = NULL;
+    else{
+        auto curr = start;
+        while(curr->next){
+            curr = curr->next;
+        }
+        auto temp = new subforwardlist;
+        temp->data = d;
+        temp->next = NULL;
+        curr->next = temp;
+    }
+
+    return true;
 } 	//добавление элемента в конец недосписка
 
-int pop_back(subforwardlist sfl){
+int pop_back(subforwardlist **sfl){
+    subforwardlist* start = *sfl;
+    
+    if(start == NULL){
+        return 0;
+    }
+    else{
+        auto prev = start;
+        auto curr = start;
+        while(curr->next){
+            prev = curr;
+            curr = curr->next;
+        }
+        
+        int need_data = curr->data;
+        delete curr;
+        prev->next = NULL;
 
+        return need_data;
+    }
+
+    return true;
 } 	//удаление элемента с конца недосписка, если пустой - возвращать 0
 
-bool push_forward(subforwardlist sfl, int d); 	//добавление элемента в начало недосписка				
-int pop_forward(subforwardlist sfl); 	//удаление элемента из начала недосписка, если пустой - возвращать 0
-bool push_where(subforwardlist sfl, unsigned int where, int d); //добавление элемента с порядковым номером where		
-int erase_where(subforwardlist sfl, unsigned int where);	//удаление элемента с порядковым номером where
-void clear(subforwardlist  sfl);	//очистить содержимое недосписка
-unsigned int size(subforwardlist  sfl);	//определить размер недосписка
+bool push_forward(subforwardlist **sfl, int d){
+    subforwardlist* temp = new subforwardlist;
+    temp->data = d;
+    temp->next = *sfl;
+    *sfl = temp;
+
+    return 1;
+} 	
+//добавление элемента в начало недосписка	
+
+int pop_forward(subforwardlist **sfl){
+    subforwardlist* start = *sfl;
+    
+    if(start == NULL){
+        return 0;
+    }
+
+    else{
+        auto second = start ->next;
+        int need_data = start->data;
+        
+        start = second;
+        
+        return need_data;
+    }
+
+    return true;
+} 	//удаление элемента из начала недосписка, если пустой - возвращать 0
+
+bool push_where(subforwardlist **sfl, unsigned int where, int d){
+    int curr_index = 0;
+    subforwardlist *curr = *sfl;
+
+    while(curr_index + 1 < where){
+        curr = curr->next;
+        curr_index++;
+    }
+
+    auto forward = curr->next;
+    curr->next = new subforwardlist;
+    curr->next->data = d;
+    curr->next->next = forward;
+    
+    return 1;
+} //добавление элемента с порядковым номером where	
+
+int erase_where(subforwardlist **sfl, unsigned int where){
+    int curr_index = 0;
+    subforwardlist *curr = *sfl;
+
+    while(curr_index + 1 < where){
+        curr = curr->next;
+        curr_index++;
+    }
+
+    auto forward = curr->next->next;
+    int need_data = curr->next->data;
+    delete curr->next;
+    curr->next = forward;
+    
+    return need_data;
+}	//удаление элемента с порядковым номером where
+
+void clear(subforwardlist  **sfl){
+    subforwardlist *curr = *sfl;
+
+    if(curr->next)curr = curr->next;
+
+    while(curr->next){
+        auto last = curr;
+        curr = curr->next;
+        delete last;
+    }
+    delete curr;
+
+    (*sfl)->next = NULL;
+}	//очистить содержимое недосписка
+
+unsigned int size(subforwardlist  *sfl){
+    int ans =0 ;
+    
+    while(sfl->next){
+        ans++;
+    }
+
+    return ans;
+}	//определить размер недосписка
 
 #include <random>
 #include <chrono>
@@ -77,6 +190,7 @@ int main()
 
     finish = get_time();
     cout << "Test sequence initialization: \t\t\t\t" << finish - start << endl;
+
     subforwardlist *sv;
     init(&sv);
 //----------- Test 000 Straight push_back

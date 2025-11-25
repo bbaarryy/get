@@ -18,14 +18,16 @@ end=-1
 last = 216227
 for line in file_00:
     curr = int(line[0:6])
-    if(abs(curr - last) > 5000):
+    if(curr > 5000):
         if(start == -1):
-            start = int(line[6::])
+            start = last
         elif end == -1:
             end = int(line[6::])
+    last=curr
 
-delta = -(start+end)/2
-
+print(start,end)
+delta = 0.5
+print(delta)
 
 def fun_plot(file00,s,qq,start_int,end_int):
     arr00=[]
@@ -82,15 +84,15 @@ plt.grid()
 plt.title("Зависимость скорости струи от смещения" + '\n',fontsize = 50)
 
 ax = plt.gca()
-ax.set_xlabel("Смещение(mm)", fontsize=28)    # +
-ax.set_ylabel("Скорость(м\с)", fontsize=28)
+ax.set_xlabel("Смещение(mm)", fontsize=40)    # +
+ax.set_ylabel("Скорость(м\с)", fontsize=40)
 
-plt.legend(fontsize = 28)
+plt.legend(fontsize = 40)
 plt.minorticks_on()
 plt.grid(which='major', color = '#444', linewidth = 1)
 plt.grid(which='minor', color='#aaa', ls=':')
-plt.xticks(fontsize=28)
-plt.yticks(fontsize=28)
+plt.xticks(fontsize=40)
+plt.yticks(fontsize=40)
 
 plt.show()
 #print(arr00[0:10])

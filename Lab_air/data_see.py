@@ -25,7 +25,7 @@ def fun_plot(file00,s,qq):
                     num = str(int(calib_arr[index]))
                 x = line[i+1:-1]
         arr00.append((int(num) - int(calib_arr[index]))/23.6)
-        coords.append(int(x) * 0.0055)
+        coords.append(int(x) * 0.0055 + 0.05)
         index+=1
     
     
@@ -41,7 +41,7 @@ for i in range(0,10,1):
         fun_plot(file00,colors[i],str(i*10))
 
 plt.grid()
-plt.title("Зависимость давления(в условных единицах), от смещения",fontsize = 40)
+plt.title("Зависимость давления(в условных единицах), от смещения",fontsize = 50)
 
 ax = plt.gca()
 ax.set_xlabel("Смещение(см)", fontsize=40)    # +

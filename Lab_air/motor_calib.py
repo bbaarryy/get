@@ -11,15 +11,17 @@ plt.scatter(dot_atm_pressure,dot_atm_sensor,color = 'purple',s=20,marker = 'D',l
 plt.plot(dot_atm_pressure,dot_atm_sensor,label ="график прямой y = 0,0055x")
 
 ax = plt.gca()
-ax.set_xlabel("Количество шагов", fontsize=29)    # +
-ax.set_ylabel("Перемещение, см", fontsize=29)
+ax.set_xlabel("Количество шагов", fontsize=40)    # +
+ax.set_ylabel("Перемещение, см", fontsize=40)
 
-plt.legend(fontsize = 29)
+print(7.7 / 1400)
+
+plt.legend(fontsize = 40)
 plt.minorticks_on()
 plt.grid(which='major', color = '#444', linewidth = 1)
 plt.grid(which='minor', color='#aaa', ls=':')
-plt.xticks(fontsize=29)
-plt.yticks(fontsize=29)
+plt.xticks(fontsize=40)
+plt.yticks(fontsize=40)
 plt.show()
 
 

@@ -13,22 +13,34 @@ for line in file_calib:
 delta = 0
 
 file_00 = open("./Lab_air/00data.txt",'r')
-start = -1
-end=-1
-last = 216227
-for line in file_00:
-    curr = int(line[0:6])
-    if(curr > 5000):
-        if(start == -1):
-            start = last
-        elif end == -1:
-            end = int(line[6::])
-    last=curr
 
-print(start,end)
-delta = 0.5
+def fun_centro(file_00):
+    beggin = 0
+    for line in file_00:
+        beggin = int(line[0:6])
+        break
+    start = -1
+    end=-1
+    last = beggin
+    qq = -1
+
+    for line in file_00:
+        curr = int(line[0:6])
+        if(abs(curr - last) > 5000):
+            if(start == -1):
+                start = qq
+                
+            elif end == -1:
+                end = int(line[6::])
+        qq =int(line[6::])
+        #print(qq)
+
+    print(start,end)
+    delta = (start+end)/2*0.0055
+    return delta
+
+delta = fun_centro(file_00)
 print(delta)
-
 def fun_plot(file00,s,qq,start_int,end_int):
     arr00=[]
     coords = []
@@ -95,7 +107,3 @@ plt.xticks(fontsize=40)
 plt.yticks(fontsize=40)
 
 plt.show()
-#print(arr00[0:10])
-
-
-

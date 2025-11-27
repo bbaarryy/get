@@ -28,8 +28,6 @@ def fun_plot(file00,s,qq):
         coords.append(int(x) * 0.0055 + 0.05)
         index+=1
     
-    
-    
     plt.plot(coords,arr00,color = s,label = 'Расстояние - ' + qq + "cm",lw = 2)
 
 colors = ['r','g','b','y','b','pink','v','brown','violet','grey']
@@ -54,7 +52,3 @@ plt.legend(fontsize = 40)
 plt.xticks(fontsize=40)
 plt.yticks(fontsize=40)
 plt.show()
-#print(arr00[0:10])
-
-
-

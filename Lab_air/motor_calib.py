@@ -6,7 +6,7 @@ colors = ['r','g','b','y','black','pink','v','brown']
 dot_atm_pressure = [0,1400]
 dot_atm_sensor = [0,7.7]
 
-plt.title("Калибровка моторного двигателя",fontsize = 50)
+plt.title("Калибровка шагового двигателя",fontsize = 50)
 plt.scatter(dot_atm_pressure,dot_atm_sensor,color = 'purple',s=20,marker = 'D',label = "Измерения")
 plt.plot(dot_atm_pressure,dot_atm_sensor,label ="график прямой y = 0,0055x")
 

@@ -43,11 +43,20 @@ int pop_back(subforwardlist **sfl){
     else{
         auto prev = start;
         auto curr = start;
+
+
+        if(curr->next == NULL){
+            *sfl = NULL;
+            auto ans = start->data;
+            delete start;
+            return ans;
+        }
+
         while(curr->next){
             prev = curr;
             curr = curr->next;
         }
-        
+
         int need_data = curr->data;
         delete curr;
         prev->next = NULL;
@@ -79,7 +88,9 @@ int pop_forward(subforwardlist **sfl){
         auto second = start ->next;
         int need_data = start->data;
         
-        start = second;
+        delete *sfl;
+
+        *sfl = second;
         
         return need_data;
     }
@@ -87,11 +98,13 @@ int pop_forward(subforwardlist **sfl){
     return true;
 } 	//удаление элемента из начала недосписка, если пустой - возвращать 0
 
+
+
 bool push_where(subforwardlist **sfl, unsigned int where, int d){
     int curr_index = 0;
     subforwardlist *curr = *sfl;
 
-    while(curr_index + 1 < where){
+    while(curr_index < where){
         curr = curr->next;
         curr_index++;
     }
@@ -124,8 +137,6 @@ int erase_where(subforwardlist **sfl, unsigned int where){
 void clear(subforwardlist  **sfl){
     subforwardlist *curr = *sfl;
 
-    if(curr->next)curr = curr->next;
-
     while(curr->next){
         auto last = curr;
         curr = curr->next;
@@ -133,13 +144,20 @@ void clear(subforwardlist  **sfl){
     }
     delete curr;
 
-    (*sfl)->next = NULL;
+    *sfl=NULL;
 }	//очистить содержимое недосписка
 
 unsigned int size(subforwardlist  *sfl){
-    int ans =0 ;
+    int ans =1 ;
     
-    while(sfl->next){
+    auto start = sfl;
+
+    if(sfl == NULL){
+        return 0;
+    }
+
+    while(start->next){
+        start = start->next;
         ans++;
     }
 
@@ -231,7 +249,7 @@ int main()
     total += finish - start;
 //----------- Test 003 Straight pop_back
     start = get_time();
-    for (unsigned int i = 0; i < n; i++)
+    for (unsigned int i = 0; i < n-1; i++)
     {
         if (pop_back(&sv) != test_sequence[i])
         {
@@ -239,6 +257,9 @@ int main()
             return 0;
         }
     }
+
+    pop_back(&sv);
+
     finish = get_time();
     if (size(sv))
     {

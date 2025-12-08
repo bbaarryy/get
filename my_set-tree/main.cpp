@@ -51,24 +51,174 @@ bool insert(subset_node **sn, int k){
         curr->left->key = k;
         curr->left->left = NULL;
         curr->left->right = NULL;
+        return 1;
     }
     else{
         curr->right = new subset_node;
         curr->right->key = k;
         curr->right->left = NULL;
         curr->right->right = NULL;
+        return 1;
     }
+
+    return 1;
+
 } // добавление элемента в дерево, дубли игнорировать (ничего не добавлять в дерево, если там уже есть элемент с таким же key) и возвращать false
 
+subset_node* find(subset_node *sn, int k){
+    if(sn == NULL){
+        return 0;
+    }
+
+    auto curr = sn;
+    auto candidat = sn;
+    int equal = 0;
+    while(true){
+        if(k > curr->key){
+            candidat = curr->right;
+        }
+        else if(k<curr->key){
+            candidat = curr->left;
+        }
+        else{
+            equal = 1;
+            break;
+        }
+
+        if(candidat == NULL){
+            break;
+        }
+        curr = candidat;
+    }
+    if(equal){return curr;}
+    else{return NULL;}
+}// поиск элемента в дереве, нужно вернуть указатель на элемент с тем же key или, если такого элемента не нашлось, то NULL
+
 bool remove(subset_node **sn, int k){
-    
+    if(*sn == NULL){
+        return 0;
+    }
+
+    subset_node* curr = *sn;
+    subset_node* candidat= *sn;
+    subset_node* prev = NULL;
+    int equal = 0;
+    while(true){
+        if(k > curr->key){
+            candidat = curr->right;
+        }
+        else if(k<curr->key){
+            candidat = curr->left;
+        }
+        else{
+            equal = 1;
+            break;
+        }
+
+        if(candidat == NULL){
+            break;
+        }
+        prev = curr;
+        curr = candidat;
+    }
+
+    if(equal == 1){
+        if(candidat -> left == NULL){
+            if(prev == NULL){
+                *sn = candidat->right;
+            }
+            else{
+                if(prev->right == candidat){
+                    prev->right = candidat->right;
+                }
+                else{
+                    prev->left = candidat->right;
+                }
+            }
+            delete candidat;
+        }
+        else{
+            auto curr_prev = curr;
+            curr = candidat->left;
+
+            int q = 0;
+            while(curr->right){
+                q++;
+                curr_prev = curr;
+                curr = curr->right;
+            }
+            
+            if(q==0){
+                candidat -> key = curr -> key;
+                candidat -> left = curr -> left;
+            }
+            else{
+                candidat -> key = curr->key;
+                curr_prev -> right = curr->left;
+            }
+
+            delete curr;
+        }  
+        return 1;
+    }
+    else{
+        return 0;
+    }
 } // удаление элемента из дерева (если элемента не нашлось, то ничего не удалять и вернуть false)
 
-subset_node* find(subset_node **sn, int k); // поиск элемента в дереве, нужно вернуть указатель на элемент с тем же key или, если такого элемента не нашлось, то NULL
-unsigned int size(subset_node **sn); // количество элементов в дереве
-unsigned int height(subset_node **sn); // высота дерева
-void destructor(subset_node **sn); // очистить всю используемую память
-int* DFS (subset_node **sn);
+
+unsigned int size(subset_node *sn){
+    if(sn ==NULL) return 0;
+
+    unsigned int ans1 = size(sn->left);
+    unsigned int ans2 = size(sn->right);
+
+    return (ans1+ans2+1);
+} // количество элементов в дереве
+
+unsigned int height(subset_node *sn){
+    if(sn ==NULL) return 0;
+
+    unsigned int ans1 = height(sn->left);
+    unsigned int ans2 = height(sn->right);
+
+    unsigned int ans = 0;
+    if(ans1 > ans2)ans = ans1;
+    else ans = ans2;
+
+    return ans+1;
+} // высота дерева
+
+void destructor(subset_node *sn){
+    if(sn ==NULL) return;
+
+    destructor(sn->right);
+    destructor(sn->left);
+    delete sn;
+} // очистить всю используемую память
+
+int* DFS (subset_node *sn){
+    if(sn==NULL){
+        return NULL;
+    }
+
+    int* left = DFS(sn->left);
+    int* right = DFS(sn->right);
+
+    auto ans = new int[size(sn) + 1];
+    for(int i = 0 ;  i < size(sn->left);i++){
+        ans[i] = left[i];
+    }
+    ans[size(sn->left)] = sn->key;
+    for(int i = 0 ;  i < size(sn->right);i++){
+        ans[i+size(sn->left)+1] = right[i];
+    }
+
+    delete[] left;
+    delete[] right;
+
+    return ans;
+}
 
 #include <random>
 #include <chrono>

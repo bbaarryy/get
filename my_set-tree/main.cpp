@@ -214,7 +214,7 @@ int* DFS (subset_node *sn){
         ans[i+size(sn->left)+1] = right[i];
     }
 
-    delete[] left;
+    //delete[] left;
     delete[] right;
 
     return ans;

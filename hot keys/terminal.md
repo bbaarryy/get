@@ -67,4 +67,44 @@ https://www.altlinux.org/TLP#Работа_в_терминале
 
 ```tload``` - график загруженности процессора в терминале
 
+Файл с конфигурациями командной оболочки:
+```~/.bashrc```
+
 crontab хранится в папке ```/etc/cron.d/```
+
+```find / -type -f/-d/-l(symbol link) -name "*.JPG" -size +1M ```
+
+cancel -a
+
+### VIM
+
+:q - quit
+
+:w - save changes
+
+x - delete
+
+3x - delete 3 symbols
+
+dd - delete current string
+
+yy - copy current string
+
+i - insert mode
+
+esc - escape insert mode
+
+J - join strings
+
+fa - find symbol a in current string
+
+; - repeat command
+
+/find_word - find word
+
+n - repeat find word
+
+:%s/строка/Строка/gc - совершить подстановку с заменой
+ ^^- тип подстановки
+все строки
+

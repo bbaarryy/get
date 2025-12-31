@@ -90,6 +90,8 @@ dd - delete current string
 
 yy - copy current string
 
+p - paste from clipboard
+
 i - insert mode
 
 esc - escape insert mode
@@ -107,4 +109,12 @@ n - repeat find word
 :%s/строка/Строка/gc - совершить подстановку с заменой
  ^^- тип подстановки
 все строки
+
+:r file.txt - paste file.txt
+
+```neofetch``` - rhose cool command
+
+```echo $XDG_SESSION_TYPE``` - x11 or wayland
+
+```sudo tail -f /var/log/syslog``` - вывод происходящего
 

@@ -118,3 +118,5 @@ n - repeat find word
 
 ```sudo tail -f /var/log/syslog``` - вывод происходящего
 
+```xmodmap -e "keycode 133 = Super_L"```
+```xmodmap -e "keycode 64 = Alt_L"```

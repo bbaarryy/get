@@ -120,3 +120,45 @@ n - repeat find word
 
 ```xmodmap -e "keycode 133 = Super_L"```
 ```xmodmap -e "keycode 64 = Alt_L"```
+
+
+### FIND
+
+```plocate имя_файла```
+
+```find директория имя_файла```
+
+-type d\f
+
+-name "*.JPG"
+
+-iname == name + Registor
+
+-size +1M
+
+Operators:
+
+```find ~ \( -type f -not -perm 0600 \) -or \( -type d -not –perm 0700 \)```
+
+Также можно добваить исполняемые действия в конец find: -delete -print
+
+Свои действия в конце:
+
+-find .... -ok echo "hello" '{}' ';' с подтверждением
+
+-find .... -exec echo "hello" '{}' ';' без подтверждения
+
+для увеличения продуктивности можно объединить команды , заменив ';' на +
+
+ИЛИ при помощи XARGS
+
+find ~ -type f -name 'foo*' -exec ls -l '{}' +
+==
+find ~ -type f -name 'foo*' -print | xargs ls -l
+
+Для пробельных имен:
+
+find ~ -iname '*.jpg' -print0 | xargs --null ls -l
+
+find playground \( -type f -not -perm 0600 -exec chmod 0600 '{}' ';' \) -or \( -type d -not -perm 0700 -exec chmod 0700 '{}' ';' \)
+

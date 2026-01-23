@@ -162,3 +162,24 @@ find ~ -iname '*.jpg' -print0 | xargs --null ls -l
 
 find playground \( -type f -not -perm 0600 -exec chmod 0600 '{}' ';' \) -or \( -type d -not -perm 0700 -exec chmod 0700 '{}' ';' \)
 
+### Archive
+
+gzip file - сжатие
+gunzip file - разжатие
+
+bzip\bunzip - analog
+
+tar cf playground.tar playground - compress directory with name playground
+режимы
+
+c Создать архив из списка файлов и/или каталогов
+x Извлечь файлы из архива
+r Добавить указанный файл и/или каталог в конец архива
+t Вывести список содержимого архива
+
+rsync параметры источник приемник
+rsync -av playground foo
+sudo rsync -av --delete /etc /home /usr/local /media/BigDisk/
+backup
+
+

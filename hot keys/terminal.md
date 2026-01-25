@@ -26,6 +26,7 @@ https://www.altlinux.org/TLP#Работа_в_терминале
 ```mv``` - перемещение, аналогично
 
 ```rm``` - удаление
+- -i - questions
 - -r - recursive
 - -f - force
 !!!Warning!!! 
@@ -153,7 +154,7 @@ Operators:
 ИЛИ при помощи XARGS
 
 find ~ -type f -name 'foo*' -exec ls -l '{}' +
-==
+equal
 find ~ -type f -name 'foo*' -print | xargs ls -l
 
 Для пробельных имен:
@@ -161,6 +162,8 @@ find ~ -type f -name 'foo*' -print | xargs ls -l
 find ~ -iname '*.jpg' -print0 | xargs --null ls -l
 
 find playground \( -type f -not -perm 0600 -exec chmod 0600 '{}' ';' \) -or \( -type d -not -perm 0700 -exec chmod 0700 '{}' ';' \)
+
+find директория -regex ~RE~
 
 ### Archive
 
@@ -182,4 +185,58 @@ rsync -av playground foo
 sudo rsync -av --delete /etc /home /usr/local /media/BigDisk/
 backup
 
+### Regular Expressions - standart POSIX
+
+. - any symbol
+
+ankors: ^ - beginof string, $ - end of string
+
+[123456] - any from this list
+
+[^123456] - deny of list
+
+[1-9a-z] - diapozone
+
+Extended RE
+
+| - or
+
+? - privious 0 or 1
+
+* - privious >=0 times
+
++ - privious >=1 times
+
+{n} - privious n times
+
+### Another text?
+
+sort 
+-n - numeric sort
+-f - force(without registre)
+-r - recoursive
+-b - ignore-leading-blanks(recomended)
+-k - key:
+    -t - castom separator
+    -k 5(number of field)n...
+    -k 6.1(6 field, 1 symbol)
+
+cut
+    -d - castom separator
+    -f(field) ~number~ 
+    -c(characters) ~diapozone~
+
+diff
+    -c - contest compare
+    -u - unificated format
+    Pathching diff. versions
+        diff -Naur ~oldfile~ ~newfile~ > patchfile.txt
+        patch < patchfile.txt 
+
+tr - replace symbols
+    cat -A foo.txt | tr ',' ':' > foo1.txt
+    tr -d - delete symbols
+
+sed - intro
+    sed -n(подавление вывода по умолчанию) '~address~ ~command~' ~input_file~
 

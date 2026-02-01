@@ -174,6 +174,7 @@ bzip\bunzip - analog
 
 tar cf playground.tar playground - compress directory with name playground
 режимы
+tar -xf archive.tar - untar
 
 c Создать архив из списка файлов и/или каталогов
 x Извлечь файлы из архива
@@ -239,4 +240,10 @@ tr - replace symbols
 
 sed - intro
     sed -n(подавление вывода по умолчанию) '~address~ ~command~' ~input_file~
+
+### Formatting output
+
+nl - add numeratioan
+fold -w ~width~ -s(by words )- перенос строки 
+
 

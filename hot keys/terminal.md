@@ -172,14 +172,15 @@ gunzip file - разжатие
 
 bzip\bunzip - analog
 
-tar cf playground.tar playground - compress directory with name playground
-режимы
+tar cvf archive.tar file1 file2 ...
 tar -xf archive.tar - untar
 
 c Создать архив из списка файлов и/или каталогов
 x Извлечь файлы из архива
 r Добавить указанный файл и/или каталог в конец архива
 t Вывести список содержимого архива
+v == verbose
+f Файл, который и будет являться архивом
 
 rsync параметры источник приемник
 rsync -av playground foo

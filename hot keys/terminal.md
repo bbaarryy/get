@@ -198,7 +198,7 @@ ankors: ^ - beginof string, $ - end of string
 
 [1-9a-z] - diapozone
 
-Extended RE
+Extended RE  (egrep)
 
 | - or
 

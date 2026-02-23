@@ -7,7 +7,7 @@ xs = [147098291]
 ys = [0]
 
 vx = [0]
-vy = [20] #
+vy = [30] #
 
 for t in range(0,365*40):
     dt = 1*60*60 #seconds

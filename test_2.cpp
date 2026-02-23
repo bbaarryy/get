@@ -1,16 +1,38 @@
 #include <iostream>
 
-using namespace std;
+using std::cout;
+using std::cin;
 
-struct person{
-    int a;
-    int b;
+class Animal {
+public:
+    // Погладить данную зверушку.
+    // Последствия зависят от реализации данного метода для класса конкретной зверушки.
+    virtual void pet() = 0;
+
+    virtual ~Animal() {};
 };
 
-int main(){
-   
-    auto a = new int[5];
+//У вас есть интерфейс NPC. Вот такой:
 
-    cout << a[-1] << '\n';
+class NPC {
+public:
+    // Поговорить с NPC.
+    // Что он скажет - зависит от реализации данного метода для конкретного NPC.
+    virtual void talk() = 0;
 
+    virtual ~NPC() {};
+};
+
+class SmartCat : public NPC, public Animal{
+public:
+    void talk(){
+        cout << "Meow\n";
+    }
+    void pet(){
+        cout << "Meow\n";
+    }
+};
+
+int main() {
+    
 }

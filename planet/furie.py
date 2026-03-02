@@ -12,7 +12,7 @@ correct_xs = [-pi,0,pi]
 
 plt.plot(correct_xs, correct_ys, color = 'g')
 
-N = 13
+N = 6
 
 def fun(x):
     return abs(x)

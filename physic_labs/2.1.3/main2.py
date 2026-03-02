@@ -39,19 +39,24 @@ freqs = [[1.314,1.530,1.745,1.961,2.178],
 freq_air = [25.2,30.2,35,45,54.9]
 
 ks=[]
-
+gammas = []
+ans = 0
 for i in range(len(freqs)):
 
     k = fun(freqs[i])[0]
     q = fun(freqs[i])[1]
     ks.append(k)
-    print(k)
-    print(q)
+    gammas.append((29 / 1000 * (1/(8.31 * (freq_air[i] + 273.15)))) * k * k)
+    print(gammas[i])
+    ans += gammas[i]
 
-plt.plot(freq_air,ks)
+ans /= 5
+print(ans)
+#plt.plot(freq_air,ks)
+plt.plot([0,1,2,3,4],gammas)
 
-plt.ylabel(r"Скорость звука, м/с",fontsize=20)
-plt.xlabel("Температура, С",fontsize=20)
+plt.ylabel(r"Показатель адиабаты",fontsize=20)
+plt.xlabel("Номер",fontsize=20)
 plt.grid()
 plt.show()
 

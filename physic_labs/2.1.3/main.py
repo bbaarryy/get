@@ -1,14 +1,14 @@
 import matplotlib.pyplot as plt
 plt.rcParams.update({'font.size': 15})
 
-def fun(arr,freq):
+def fun(arr,freq,ch):
     x = []
     y = arr
     st = y[0]
     for i in range(len(arr)):
         x.append(i)
         y[i] = y[i] - st
-    #plt.plot(x,y)
+    plt.plot(x,y)
 
     xy_av = 0
     x_2_av = 0
@@ -23,11 +23,12 @@ def fun(arr,freq):
     y_2_av /= len(x)
 
     k = xy_av / x_2_av
-    sigma_k = 0
-    sigma_k = 1/((len(x))**0.5) * (y_2_av / x_2_av - k**2)**0.5
-
-    #print((sigma_k/k))
-    return(k*freq*2,sigma_k/k)
+    hi = 0
+    for i in range(len(arr)):
+        hi += (arr[i] - k*i)**2 / (1)**2
+    if(ch):
+        print((hi**0.5, len(arr)))
+    return(k*freq*2,hi)
     
 
 air = [[83,199],
@@ -57,8 +58,8 @@ q_a = 0
 
 for i in range(len(co2)):
     cs.append(i)
-    k = fun(co2[i],freq_co2[i])[0]
-    q = fun(co2[i],freq_co2[i])[1]
+    k = fun(co2[i],freq_co2[i],0)[0]
+    q = fun(co2[i],freq_co2[i],1)[1]
     q_a += q
     ks.append(k)
     ans += ks[i]

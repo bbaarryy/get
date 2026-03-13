@@ -7,21 +7,19 @@ from numpy import sqrt, sin, cos, pi
 
 pi = 3.1415926535
 
-correct_ys = [pi, 0, pi]
-correct_xs = [-pi,0,pi]
-
-#plt.plot(correct_xs, correct_ys, color = 'g')
-
-N = 6
+N = 10
 
 def fun(x):
-    return x**2
+    return abs(x)
 
 def fsin(x,n):
-    return x**2 * sin(n*x)
+    return abs(x) * sin(n*x)
 
 def fcos(x,n):
-    return x**2 * cos(n*x)
+    return abs(x) * cos(n*x)
+
+ns = []
+a_ns= []
 
 def draw_app_fun():
     delta = 0.01
@@ -41,12 +39,16 @@ def draw_app_fun():
             an = (1/pi) * quad(fcos, -pi,pi, args = (n))[0]
             bn = (1/pi) * quad(fsin, -pi,pi, args = (n))[0]
 
+            ns.append(n)
+            a_ns.append(an)
+
             fx += an * cos(n*x) + bn * sin(n*x)
         
         ys.append(fx)
         x+=delta
 
     plt.plot(xs,ys)
+
 
 draw_app_fun()
 plt.grid()

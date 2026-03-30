@@ -2,6 +2,7 @@ import scipy.integrate as integrate
 import scipy.special as special
 import matplotlib.pyplot as plt
 from scipy.integrate import quad
+from numpy.fft import fft, ifft
 
 from numpy import sqrt, sin, cos, pi
 
@@ -29,6 +30,9 @@ def draw_app_fun():
     xs = []
     ys = []
     x= -pi
+
+    waves_as = []
+    waves_fs = []
     while x <= pi:
         xs.append(x)
 
@@ -42,10 +46,13 @@ def draw_app_fun():
             bn = (1/pi) * quad(fsin, -pi,pi, args = (n))[0]
 
             fx += an * cos(n*x) + bn * sin(n*x)
-        
+            waves_as.append(an)
+            waves_fs.append(bn)
+
         ys.append(fx)
         x+=delta
-
+    
+    
     plt.plot(xs,ys)
 
 draw_app_fun()

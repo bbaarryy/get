@@ -18,7 +18,6 @@ x += np.sin(2*np.pi*freq*t)
 freq = 7   
 x += 0.5* np.sin(2*np.pi*freq*t)
 
-x = [1]*sr
 
 from numpy.fft import fft, ifft
 

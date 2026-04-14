@@ -1,100 +1,40 @@
 #include <iostream>
+#include <vector>
+#include <algorithm>
 
-using namespace std;
+using std::cin;
+using std::cout;
 
-// Шаблонный класс для размерной величины
-template<int L, int M, int T>
-class DimQ
-{
-    public:
-        double value;
-
-        DimQ(double value): value(value) {}
+struct wr{
+    int day,id,ca,o2_air,co2_air,k,ph;
 };
 
-// Псевдонимы типов
-typedef DimQ<1, 0, 0> Length;
-typedef DimQ<0, 1, 0> Mass;
-typedef DimQ<0, 0, 1> Time;
-typedef DimQ<1, 0, -1> Velocity;
-typedef DimQ<1, 0, -2> Acceleration;
-
-// Шаблонный оператор изменения знака
-template<int L, int M, int T>
-DimQ<L, M, T> operator-(const DimQ<L, M, T>& q)
-{
-    return DimQ<L, M, T>(-q.value);
+bool comp(wr& a,wr& b){
+    return a.day < b.day;
 }
 
-// Ша
-template<int L, int M, int T>
-DimQ<L, M, T> operator-(const DimQ<L, M, T>& q1, const DimQ<L, M, T>& q2)
-{
-    return DimQ<L, M, T>(q1.value - q2.value);
-}
+int main(){
+    int n;cin>>n;
+    std::vector<wr> arr;
+    for(int i = 0 ; i < n ;i++){
+        int day,id,ca,o2_air,co2_air,k,ph;
+        cin >> day>>id>>ca>>o2_air>>co2_air>>k>>ph;
+        arr.push_back({day,id,ca,o2_air,co2_air,k,ph});
+    }
+    sort(arr.begin(),arr.end(),comp);
 
-// Шаблонный оператор сложения  
-template<int L, int M, int T>
-DimQ<L, M, T> operator+(const DimQ<L, M, T>& q1, const DimQ<L, M, T>& q2)
-{
-    return DimQ<L, M, T>(q1.value + q2.value);
-}
-
-// Шаблонный оператор деления
-template<
-    int L1, int M1, int T1,
-    int L2, int M2, int T2>
-DimQ<L1-L2, M1-M2, T1-T2> operator/(const DimQ<L1, M1, T1>& q1, const DimQ<L2, M2, T2>& q2)
-{
-    return DimQ<L1-L2, M1-M2, T1-T2>(q1.value / q2.value);
-}
-
-template<
-    int L1, int M1, int T1,
-    int L2, int M2, int T2>
-DimQ<L1-L2, M1-M2, T1-T2> operator/(const DimQ<L1, M1, T1>& q1, const DimQ<L2, M2, T2>& q2)
-{
-    return DimQ<L1-L2, M1-M2, T1-T2>(q1.value / q2.value);
-}
-
-// Шаблонный оператор вывода размерной величины
-template<int L, int M, int T>
-ostream& operator<<(ostream& os, const DimQ<L, M, T>& q)
-{
-    os << q.value << " ";
-
-    if (L != 0)
-        os << "m^(" << L << ")";
-    
-    if (M != 0)
-        os << "kg^(" << M << ")";
-    
-    if (T != 0)
-        os << "s^(" << T << ")";
-
-    return os;
-
-}
-
-int main()
-{
-    // Длина
-    Length l1 = {100};
-    Length l2 = {200};
-    // Время    
-    Time t = {20};
-
-    // Скорость
-    Velocity v = (l2 + l1) / t;
-
-    // Выводим величины
-    cout << l1 / t << endl;
-    cout << l2 / l1 / t << endl;
-    cout << v << endl;
-
-    // Это не скомпилируется с ошибкой вида
-    //    'нельзя из длины вычитать скорость, размерности не сходятся'
-    // Mass m = l1 - v;
-
-    return 0;
+    int curr_ans= 0;
+    int ans = -1000;
+    for(int i = 1 ; i < arr.size();i++){
+        if(arr[i].day - arr[i].day == 1){
+            if(arr[i].ca >= arr[i-1].ca && arr[i].co2_air < arr[i-1].co2_air){
+                curr_ans++;
+                ans = std::max(curr_ans,ans);
+            }
+            else curr_ans=0;
+        }
+        else curr_ans = 0;
+    }
+    ans = std::max(curr_ans,ans);
+    cout << ans << '\n';
 }

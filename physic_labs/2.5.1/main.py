@@ -54,12 +54,24 @@ a,b,hi = fun(ts, sigmas,1)
 
 print(sigmas[0])
 
-plt.plot([20,60],[20*a + b,a*60+b],color = 'b', label = "Ожидаемые данные")
+qs = []
+uf = []
+for i in range(len(ts)):
+    qs.append(-ts[i] * -0.00018)
+    uf.append(sigma_correct[i] - ts[i] * (-0.00018))
+
+#plt.plot(ts,qs,color = 'b', label = "теплота образования единицы поверхности жидкости q")
+plt.plot(ts,uf,color = 'g', label = "поверхностная энергия U единицы площади F")
+
+#plt.plot([20,60],[20*a + b,a*60+b],color = 'b', label = "Ожидаемые данные")
 print( (20*a + b - (a*60+b)) / (60-20))
-plt.ylabel(r"$Коэффициент_ пов. натяжения , Н/м$",fontsize=20)
+plt.ylabel(r"поверхностная энергия U единицы площади F, Н/м",fontsize=20)
 plt.xlabel(r"$Температура, С$",fontsize=20)
-plt.plot(ts,sigmas,color = 'r', label = "Полученные данные")
-plt.plot(t_correct,sigma_correct,color = 'g', label = "Табличные данные")
+#plt.plot(ts,sigmas,color = 'r', label = "Полученные данные")
+#plt.plot(t_correct,sigma_correct,color = 'g', label = "Табличные данные")
+
+
+
 plt.legend()
 plt.grid()
 plt.show()

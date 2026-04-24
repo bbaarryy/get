@@ -5,8 +5,7 @@ from scipy.signal import hilbert
 from scipy.signal import resample
 from scipy import signal
 
-fs, data = wavfile.read('./planet/2-sem/signal.WAV')
-
+fs, data = wavfile.read('/home/dimon/projects/get/planet/2-sem/signal.WAV')
 samplerate, data = wavfile.read('./planet/2-sem/signal.WAV')
 
 data = data.tolist()
@@ -16,23 +15,24 @@ for i in range(0,len(data)):
     new_data.append(data[i] - 130)
     data[i] = data[i] - 130
 
-new_data = signal.resample(new_data,int(len(new_data) / 2.65))
 
-SYNC_STR = "000011001100110011001100110011000000000"
+amplitude_envelope = np.abs(hilbert(data))
 
-xah = hilbert(new_data)
-amplitude_envelope = np.abs(xah)
+duration = len(data) / fs
+pixels = resample(amplitude_envelope, int(duration * 4160))
 
-print(amplitude_envelope[0:100])
-
-print("Огибающая рассчитана для всех данных.")
+SYNC = np.array([0,0,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,0,0,0,0,0,0,0])
+corr = np.correlate(pixels[:4160], SYNC * np.max(pixels), mode='valid')
+start_index = np.argmax(corr)
 
 width = 2080
-height = len(amplitude_envelope) // width
-truncated_envelope = amplitude_envelope[:height * width]
-image_matrix = truncated_envelope.reshape((height, width))
+aligned_pixels = pixels[start_index:]
+height = len(aligned_pixels) // width
+image_matrix = aligned_pixels[:height * width].reshape((height, width))
 
-plt.figure(figsize=(15,10))
+image_matrix = np.roll(image_matrix, shift=1040, axis=1)
+
+plt.figure(figsize=(15, 10))
 plt.imshow(image_matrix, cmap='gray', aspect='auto')
 plt.tight_layout()
 plt.show()

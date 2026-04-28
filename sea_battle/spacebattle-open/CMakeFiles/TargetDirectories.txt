@@ -1,0 +1,3 @@
+/home/dimon/projects/get/sea_battle/spacebattle-open/CMakeFiles/Profiler.dir
+/home/dimon/projects/get/sea_battle/spacebattle-open/CMakeFiles/edit_cache.dir
+/home/dimon/projects/get/sea_battle/spacebattle-open/CMakeFiles/rebuild_cache.dir

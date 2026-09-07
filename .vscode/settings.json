@@ -1,4 +1,7 @@
 {
+    "window.titleBarStyle": "custom",
+    "window.customMenuBarAltFocus": false,
+
     "files.associations": {
         "array": "cpp",
         "atomic": "cpp",
@@ -57,5 +60,6 @@
         "cinttypes": "cpp",
         "typeinfo": "cpp",
         "variant": "cpp"
-    }
+    },
+    "cmake.ignoreCMakeListsMissing": true
 }

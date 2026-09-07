@@ -1,13 +1,19 @@
-arr = []
-l = ""
+from time import time as t
 
-while l != "stop":
-    l = input()
-    arr.append(l)
+n = range(10**5)
 
-for i in range(len(arr)):
-    if(sorted(arr[i]) == sorted("unlingsder")):
-        print(arr[i])
-    
+l=[]
 
+t1=t()
+
+for i in n:
+    l.append(i)
+
+print(t()-t1)
+
+t1=t()
+
+for i in n:
+    -1 in l
+print(t()-t1)
 

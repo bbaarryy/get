@@ -76,9 +76,9 @@ errors_B = deepcopy(total_I)
 
 for i in range(len(total_B)):
     for j in range(len(total_B[i])):
-        errors_B[i][j] = errors_B[i][j]*0.1
+        errors_B[i][j] = errors_B[i][j]*11
         #total_B[i][j] = total_B[i][j]*3.9133121468926535 + 0.44975282485875834
-        total_B[i][j] = total_B[i][j]*4.3238
+        total_B[i][j] = total_B[i][j]*576.4
         total_U[i][j] -= U0s[i]
     
 colors = ['r','g','b','purple','black','brown','yellow']
@@ -86,8 +86,8 @@ print(errors_B[0])
 for i in range(6):
     a,b,k,sigma_a,sigma_b = fun(total_B[i],total_U[i])
     #sigma_a = format(sigma_a, '.8f')
-    plt.errorbar(total_B[i], total_U[i], yerr = 0.1, xerr = errors_B[i], fmt='o',label = str(Germs[i]) + 'A; k = ' + str(a)[0:5] + '+-' + str(sigma_a)[0:5],color = colors[i] )   #U(B)
-    plt.plot([0,7],[b,a*7+b],color = colors[i]) 
+    plt.errorbar(total_B[i], total_U[i], yerr = 0.1, xerr = errors_B[i], fmt='o',label = str(Germs[i]) + 'A; k = ' + str(a)[0:6] + '+-' + str(sigma_a)[0:5],color = colors[i] )   #U(B)
+    plt.plot([0,900],[b,a*900+b],color = colors[i]) 
     #plt.plot(total_B[i], total_U[i],label = str(Germs[i]) + 'A' )   #U(B)
 
 #plt.errorbar(Is,B, color='red',xerr=0.05,yerr=0.1,fmt='o',label='')
@@ -97,7 +97,7 @@ for i in range(6):
 #print(a,b)
 
 plt.ylabel(r"ЭДС Холла, mV",fontsize=20)
-plt.xlabel(r"Индукция магнитного поля катушки, мВб",fontsize=20)
+plt.xlabel(r"Индукция магнитного поля катушки, мТл",fontsize=20)
 
 plt.legend(fontsize=20)
 plt.grid()

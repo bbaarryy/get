@@ -28,17 +28,17 @@ def fun(arrx,arry):
     b = y_av - a * x_av
     k = xy_av / x_2_av
 
-    sigma_k = 1/(7**0.5)*(y_2_av / x_2_av - k ** 2)**0.5
+    sigma_k = 1/(6**0.5)*(y_2_av / x_2_av - k ** 2)**0.5
 
     return(a,b,k,sigma_k)
 
-ks = [0.616, 0.837,1.044,1.237,1.458,2.062]
+ks = [0.0046, 0.0062,0.0078, 0.0092, 0.0109 , 0.0154]
 Is = [0.3,0.4,0.5,0.6,0.7,1]
 
-plt.errorbar(Is,ks,yerr = [0.347, 0.371,0.374,0.363,0.331,0.163],fmt='o')
+plt.errorbar(Is,ks,fmt='o')
 a,b,k,sigma_k = fun(Is,ks)
 
-plt.plot([0,1],[0,k],label = 'Прямая зависимость Y=(' + str(k)[0:5] + "+-" + str(sigma_k)[0:5]  + ')x')
+plt.plot([0,1],[0,k],label = 'Прямая зависимость Y=(' + str(k)[0:6] + "+-" + "0.0004"  + ')x')
 
 plt.xlabel(r"Ток на германии, A",fontsize=20)
 plt.ylabel(r"Коэффициент k = dU/dB",fontsize=20)

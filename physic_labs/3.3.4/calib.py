@@ -32,23 +32,27 @@ def fun(arrx,arry):
     k = xy_av / x_2_av
     sigma_k = 1/(7**0.5)*(y_2_av / x_2_av - k ** 2)**0.5
     print(k,sigma_k)
-    return(a,b,sigma_a,sigma_b)
+    return(a,b,sigma_a,sigma_b,k)
 
 Is = [1.49, 1.25, 1.15, 1.00, 0.8, 0.5, 0.25]
-B = [6, 5.4, 5.1, 4.5, 3.7, 2.35, 1.3]
+Fi = [6, 5.4, 5.1, 4.5, 3.7, 2.35, 1.3]
 
-a,b,sa,sb = fun(Is, B)
+B= []
+for i in range(len(Fi)):
+    B.append(Fi[i] / (75 * 10**(-4)))
+
+a,b,sa,sb,k = fun(Is, B)
 xerrs = [0.05]*7
 yerrs = [0.1]*7
 
-plt.errorbar(Is,B, color='red',xerr=0.05,yerr=0.1,fmt='o',label='Полученные данные')
-plt.plot([0,1.5],[0,1.5*4.3238],label="y = 4.3238x")
+plt.errorbar(Is,B, color='red',xerr=0.05,yerr=0.1 /1000,fmt='o',label='Полученные данные')
+plt.plot([0,1.5],[0,1.5*k],label="y = " + str(k)[0:5] + "x")
 #plt.errorbar(xerrs,yerrs)
 
 print(sa,sb)
 
 plt.xlabel(r"Сила тока через германий, А",fontsize=20)
-plt.ylabel(r"Индукция магнитного поля катушки, мВб",fontsize=20)
+plt.ylabel(r"Индукция магнитного поля катушки, мТл",fontsize=20)
 #plt.plot(ts,sigmas,color = 'r', label = "Полученные данные")
 #plt.plot(t_correct,sigma_correct,color = 'g', label = "Табличные данные")
 

@@ -16,9 +16,21 @@ xs2 = [5,4,3.5,3,2.5,1,0.5,0.2]
 
 ls2 = [5,4,3.5,3,2.5,1,0.5,0.2]
 
+#AMMMM
+
+ms = [20,30,40,50,60,70,80,90,100]
+vs = [54.88,81.75,110.1,138,161.7,190,220,244.8,270]
+
+big = 535.7
+
+for i in range(len(vs)):
+    vs[i] = vs[i] / (big / 2)
 
 
-plt.plot(xs2,ls2)
+plt.plot(vs,ms)
+
+
+#plt.plot(xs2,ls2)
 
 
 def fun(arrx,arry):
@@ -60,8 +72,8 @@ y = 5
 
 #plt.plot(x_smooth, y_smooth)
 
-plt.xlabel(r"Частота повторения, кГц",fontsize=20)
-plt.ylabel(r"Расстояние м-ду пиками, кГц",fontsize=20)
+plt.xlabel(r"Отношение амплитуд * 2",fontsize=20)
+plt.ylabel(r"Глубина модуляции, %",fontsize=20)
 plt.legend(fontsize = 20)
 plt.grid()
 plt.show()

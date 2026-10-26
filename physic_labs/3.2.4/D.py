@@ -33,43 +33,64 @@ def fun(arrx,arry):
 
     return(a,b,k,sigma_k)
 
+ch=1
+if(ch==1):
+    ### Теперь декремент затухания
+    Qs = [290,600,900,1200,1400]
+    a=[[656,500,368,280,204],
+    [544,316,180],
+    [448,200,92],
+    [376,132,44],
+    [344,108,36]]
 
-### Теперь декремент затухания
-Qs = [290,600,900,1200,1400]
-a=[[656,500,368,280,204],
-   [544,316,180],
-   [448,200,92],
-   [376,132,44],
-   [344,108,36]]
+    xSpiral = [[3.8,2.9,2.2],
+               [3.6,2.1,1.2],
+               [3.4,1.6,0.7],
+               [3.2,1.1,0.4],
+               [3.1,1,0.3]]
 
-ys = []
-xs = []
-yerr= []
-for i in range(len(Qs)):
-    D1 = math.log(a[i][0] / a[i][1])
-    D2 = math.log(a[i][1] / a[i][2])
-    D3 = 0.5 * math.log(a[i][0] / a[i][2])
-    print("tetta - ", 1 / ( (D1 + D2 + D3)/3) )
 
-    yerr.append((1/(D1) - 1/((D1+D2+D3)/3)) ** 2)
-    #print(D1, D2, D3)
-    ys.append( 1 / ((D1 + D2 + D3)/3)**2 )
-    xs.append(1/ (Qs[i]) ** 2)
+    
+    ys = []
+    xs = []
+    yerr= []
 
-a,b,k,sigma_k = fun(xs,ys)
-plt.plot([0,1.2 * 10**-5], [b,a*1.2 * 10**-5 + b])
-#print(a,b)
+    xSs = []
+    ySs = []
 
-print(sigma_k)
+    for i in range(len(Qs)):
+        D1 = math.log(a[i][0] / a[i][1])
+        D2 = math.log(a[i][1] / a[i][2])
+        D3 = 0.5 * math.log(a[i][0] / a[i][2])
 
-#print((ys[1] - ys[0]) / (xs[1] - xs[0]))
+        DS1 = math.log(xSpiral[i][0] / xSpiral[i][1])
+        DS2 = math.log(xSpiral[i][1] / xSpiral[i][2])
+        DS3 = 0.5 * math.log(xSpiral[i][0] / xSpiral[i][2])
 
-plt.scatter(xs,ys)
-#plt.errorbar(xs,ys,xerr = 0.000001,yerr = yerr)
-plt.xlabel("1/R^2",fontsize = 20)
-plt.ylabel("Обратный декремент",fontsize=20)
-plt.legend(fontsize=20)
-plt.grid()
-plt.show()
+        print("Q - ", 3.1415926535 / ( (DS1 + DS2 + DS3)/3 ) )
+        print("Q_th - ", 4.1 / Qs[i] * 1000)
+        yerr.append((1/(D1) - 1/((D1+D2+D3)/3)) ** 2)
+        #print(D1, D2, D3)
+        ys.append( 1 / ((D1 + D2 + D3)/3)**2 )
+        xs.append(1/ (Qs[i]) ** 2)
 
-###
+        
+
+
+    a,b,k,sigma_k = fun(xs,ys)
+    #plt.plot([0,1.2 * 10**-5], [b,a*1.2 * 10**-5 + b])
+    #print(a,b)
+
+    #print(sigma_k)
+
+    #print((ys[1] - ys[0]) / (xs[1] - xs[0]))
+
+    # plt.scatter(xs,ys)
+    # #plt.errorbar(xs,ys,xerr = 0.000001,yerr = yerr)
+    # plt.xlabel("1/R^2",fontsize = 20)
+    # plt.ylabel("Обратный декремент",fontsize=20)
+    # plt.legend(fontsize=20)
+    # plt.grid()
+    # plt.show()
+
+    ###

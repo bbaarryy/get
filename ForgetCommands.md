@@ -7,17 +7,6 @@
 
     # more correct
     enca -L ru <yourfile>.txt
-### decode:
-    iconv -f CP1251 -t UTF-8 <currentFile>.txt > <new_file>.txt
-
-
-
-
-## Split .flac file with .cue file
-    shnsplit -f file.cue -t %n-%t -o flac file.flac
-
-
-
 
 # decode:
     iconv -f CP1251 -t UTF-8 <currentFile>.txt > <new_file>.txt
@@ -27,3 +16,11 @@
 
 ## Get display resolution 
     xrandr --current | grep primary
+
+# Record screen
+    kooha
+
+# Snowflakes
+    ~/Downloads/Snowhush-x86_64.AppImage
+
+

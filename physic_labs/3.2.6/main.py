@@ -45,7 +45,7 @@ for i in range(len(magasine)):
 
 # plt.plot([0,1],[0,k],label = 'Прямая зависимость Y=(' + str(k)[0:6] + "+-" + "0.0004"  + ')x')
 
-plt.plot(x, I)
+plt.scatter(x, I)
 
 plt.xlabel(r"Отклонение по шкале, см",fontsize=20)
 plt.ylabel(r"Ток через гальванометр, А",fontsize=20)
@@ -58,4 +58,7 @@ print(a,b)
 
 plt.legend(fontsize=20)
 plt.grid()
+plt.grid(True, alpha=0.8, which='both')
+plt.minorticks_on()
+plt.grid(True, alpha=0.2, which='minor')
 plt.show()
